@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contato</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="css/style.css">   
+</head>
+<body>
+    <%- include ('partials/header') %>
+    <div>
+        <div>
+            <h2><%= titulo %></h2>
+            <hr>
+        </div>
+        <div>
+            <p>Abaixo estão os meus links de contato. Sinta-se a vontade para me enviar uma mensagem!</p>
+        </div>
+        <div>
+            <form action="/enviar-email" method="post">
+                <input type="text" name="nome" placeholder="Seu nome" required>
+                <input type="email" name="email" placeholder="Seu e-mail" required>
+                <textarea name="msg" placeholder="Digite sua mensagem" required></textarea>
+                <button type="submit">Enviar</button>
+            </form>
+            <% if (typeof enviado !== 'undefined' && enviado) { %>
+                <p style="color: green;">Mensagem enviada com sucesso! :)</p>
+            <% } else if (typeof erro !== 'undefined' && erro) { %>
+                <p style="color: red;">Ocorreu um erro ao enviar sua mensagem. Tente novamente.</p>
+            <% } %>
+        </div>
+        <div>
+            <a href="mailto:anajulia3907@gmail.com">
+                <i class="fa-solid fa-envelope"></i>
+            </a>
+            <a href="https://www.linkedin.com/in/ana-gaspar-957775325/">
+                <i class="fa-brands fa-linkedin-in"></i>
+            </a>
+            <a href="https://github.com/anajgaspar">
+                <i class="fa-brands fa-github"></i>
+            </a>
+        </div>
+    </div>
+</body>
+</html>
