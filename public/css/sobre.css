@@ -1,0 +1,92 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    scroll-behavior: smooth;
+    font-family: 'Poppins', sans-serif;
+}
+
+body {
+    background-color: #0d0d0d;
+    color: #ffffff;
+    padding-top: 80px;
+}
+
+#sobre {
+    min-height: 87vh;
+    padding: 5rem 10%;
+    color: #ffffff;
+    display: flex;
+    flex-direction: column;
+    gap: 3rem;
+}
+
+#sobre h2 {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: #ffffff;
+}
+
+#sobre hr {
+    width: 60px;
+    height: 4px;
+    border: none;
+    background-image: linear-gradient(to left, #FF67B6, #9E56C6, #3E46D7);
+    margin-bottom: 1rem;
+}
+
+.sobre-conteudo {
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
+}
+
+.sobre-texto {
+    flex: 1;
+    font-size: 1rem;
+    line-height: 1.7;
+    color: #d9d9d9;
+}
+
+.sobre-texto a {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3rem;
+    margin-top: 1rem;
+    background-image: linear-gradient(to left, #FF67B6, #9E56C6, #3E46D7);
+    color: #ffffff;
+    padding: 8px;
+    border-radius: 8px;
+    font-size: smaller;
+    text-decoration: none;
+}
+
+a img {
+    width: 17px;
+    height: auto;
+}
+
+.sobre-foto img {
+    width: 300px;
+    height: auto;
+    border-radius: 1rem;
+}
+
+@media (max-width: 768px) {
+    #sobre h2 {
+        font-size: 2.2rem;
+    }
+
+    .sobre-conteudo {
+        flex-direction: column;
+    }
+
+    .sobre-texto {
+        font-size: 0.95rem;
+    }
+
+    .sobre-foto img {
+        width: 100%;
+    }
+
+}

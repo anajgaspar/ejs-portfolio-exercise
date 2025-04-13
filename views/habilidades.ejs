@@ -4,20 +4,23 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Habilidades & Certificações</title>
-    <link rel="stylesheet" href="css/style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+    <link rel="stylesheet" href="css/habilidades.css">
 </head>
 <body>
     <%- include ('partials/header') %>
-    <div>
+    <section id="habilidades">
         <div>
             <h2><%= titulo %></h2>
             <hr>
         </div>
-        <div>
+        <div class="habilidades-texto">
             <p>Sobre soft skills: sou resiliente, adaptável e proativa, com facilidade para aprender e colaborar em equipe. Valorizo uma comunicação clara e estou sempre em busca de crescimento pessoal e profissional.</p>
-            <p>Abaixo estão algumas tecnologias com as quais estou familiarizada:</p>
         </div>
-        <div>
+        <div class="tecnologias">
             <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/html5/html5-original.svg" alt="html5"/>
             <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/css3/css3-original.svg" alt="css3"/>
             <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/javascript/javascript-original.svg" alt="javascript"/>
@@ -34,9 +37,61 @@
             <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/figma/figma-original.svg" alt="figma"/>
         </div>
         <hr>
-        <div>
-
+        <div class="habilidades-texto">
+            <p><strong>Abaixo estão minhas atuais certificações, clique para visualizar o arquivo completo:</strong></p>
         </div>
-    </div>
+        <div class="certificados-carousel">
+            <div class="swiper">
+                <div class="swiper-wrapper">
+                    <div class="swiper-slide">
+                        <a href="certificados/escola-inovadores.pdf" target="_blank">
+                            <img src="spoiler-certificados/escola-inovadores.png">
+                        </a>
+                    </div>
+                    <div class="swiper-slide">
+                        <a href="certificados/huawei-python-basico.pdf" target="_blank">
+                            <img src="spoiler-certificados/huawei-python-basico.png">
+                        </a>
+                    </div>
+                    <div class="swiper-slide">
+                        <a href="certificados/huawei-python-basico.pdf" target="_blank">
+                            <img src="spoiler-certificados/huawei-python-basico.png">
+                        </a>
+                    </div>
+                </div>
+                <div class="swiper-button-next"></div>
+                <div class="swiper-button-prev"></div>
+                <div class="swiper-pagination"></div>
+            </div>
+        </div>
+    </section>
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const swiper = new Swiper('.swiper', {
+            slidesPerView: 1,
+            spaceBetween: 20,
+            loop: true,
+            breakpoints: {
+                768: {
+                    slidesPerView: 1,
+                    spaceBetween: 10,
+                },
+                769: {
+                    slidesPerView: 2,
+                    spaceBetween: 20,
+                }
+            },
+            pagination: {
+                el: '.swiper-pagination',
+                clickable: true
+            },
+            navigation: {
+                nextEl: '.swiper-button-next',
+                prevEl: '.swiper-button-prev'
+            }
+            });
+            });
+    </script>
 </body>
 </html>

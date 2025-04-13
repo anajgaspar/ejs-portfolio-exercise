@@ -1,0 +1,114 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    scroll-behavior: smooth;
+    font-family: 'Poppins', sans-serif;
+}
+
+body {
+    background-color: #0d0d0d;
+    color: #ffffff;
+    padding-top: 80px;
+}
+
+#habilidades {
+    min-height: 87vh;
+    padding: 5rem 10%;
+    color: #fff;
+    display: flex;
+    flex-direction: column;
+    gap: 3rem;
+}
+
+#habilidades h2 {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: #ffffff;
+}
+
+#habilidades hr {
+    width: 60px;
+    height: 4px;
+    border: none;
+    background-image: linear-gradient(to left, #FF67B6, #9E56C6, #3E46D7);
+    margin-bottom: -2rem;
+}
+
+.habilidades-texto {
+    font-size: 1rem;
+    line-height: 1.7;
+    color: #d9d9d9;
+}
+
+.tecnologias {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    margin: 0 50px;
+    gap: 1.5rem;
+    justify-items: center;
+    align-items: center;
+}
+
+.tecnologias img {
+    max-width: 50px;
+    transition: transform 0.3s ease;
+}
+
+.tecnologias img:hover {
+    transform: scale(1.1);
+}
+
+.certificados-carousel {
+    margin-top: -3rem;
+}
+
+.swiper {
+    padding: 2rem 0;
+    position: relative;
+}
+
+.swiper-slide {
+    background-color: #ffffff;
+    color: #464343;
+    border-radius: 1rem;
+    padding: 1.5rem;
+    text-align: center;
+}
+
+.swiper-slide a img {
+    max-width: 90%;
+}
+
+.swiper-button-next,
+.swiper-button-prev {
+    color: #9e6ffe;
+    width: 40px;
+    height: 40px;
+    z-index: 10;
+}
+
+.swiper-pagination-bullet {
+    background-color: #9e6ffe;
+    opacity: 0.5;
+}
+
+.swiper-pagination-bullet-active {
+    opacity: 3;
+}
+
+@media (max-width: 768px) {
+    #habilidades h2 {
+        font-size: 2.2rem;
+    }
+    
+    .habilidades-texto {
+        font-size: 0.95rem;
+    }
+
+    .swiper {
+        width: 100%;
+        margin: 0;
+    }
+}

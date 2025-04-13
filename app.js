@@ -34,12 +34,44 @@ app.get('/habilidades', (req, res) => {
 })
 
 app.get('/projetos', (req, res) => {
-    var titulo = 'Projetos'
-    var descricao = 'Abaixo estão os projetos que desenvolvi até o momento:'
-    res.render('projetos', {
-        titulo: titulo,
-        descricao: descricao
-    })
+    const projetos = [
+        {
+          id: 1,
+          titulo: "Desempenho de Vereadores",
+          imagem: "spoiler-projetos/spoiler-api1.png",
+          descricao:
+            "Desenvolvimento de uma página web responsiva com visualizações gráficas para representar a atuação geral da câmara.",
+          tecnologias: ["HTML5", "CSS3", "JavaScript", "Flask", "MySQL"],
+          github: "https://github.com/Draco-Imperium/API_FATEC1",
+        },
+        {
+          id: 2,
+          titulo: "Dashboard de Indicadores",
+          imagem: "spoiler-projetos/spoiler-api2.png",
+          descricao:
+            "Desenvolvimento de um dashboard de indicadores para monitorar e visualizar o impacto da plataforma, fornecendo dados estratégicos para patrocinadores e stakeholders.",
+          tecnologias: ["HTML5", "CSS3", "JavaScript", "React", "Sass", "TypeScript", "NodeJS"],
+          github: "https://github.com/GeneSys-fatec/API-2DSM",
+        },
+        {
+          id: 3,
+          titulo: "Portfólio Pessoal",
+          imagem: "spoiler-projetos/spoiler-portfolio.png",
+          descricao: "Desenvolvimento de um portfólio pessoal que reúne projetos e experiências.",
+          tecnologias: ["HTML5", "CSS3", "React", "TypeScript", "TailwindCSS"],
+          github: "https://github.com/anajgaspar/personal-portfolio",
+        },
+        {
+          id: 4,
+          titulo: "Portfólio Acadêmico",
+          imagem: "spoiler-projetos/spoiler-portfolio-express.png",
+          descricao: "Desenvolvimento de um portfólio acadêmico que reúne projetos e experiências.",
+          tecnologias: ["HTML5", "CSS3", "JavaScript", "NodeJS", "Express", "EJS"],
+          github: "https://github.com/anajgaspar/ejs-portfolio-exercise",
+        },
+    ];      
+
+    res.render('projetos', { projetos })
 })
 
 app.use(bodyParser.urlencoded({ extended: false }))

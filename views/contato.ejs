@@ -5,32 +5,35 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Contato</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <link rel="stylesheet" href="css/style.css">   
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">    
+    <link rel="stylesheet" href="css/contato.css">   
 </head>
 <body>
     <%- include ('partials/header') %>
-    <div>
+    <div id="contato">
         <div>
             <h2><%= titulo %></h2>
             <hr>
         </div>
-        <div>
-            <p>Abaixo estão os meus links de contato. Sinta-se a vontade para me enviar uma mensagem!</p>
+        <div class="contato-texto">
+            <p><strong>Abaixo estão os meus links de contato. Sinta-se a vontade para me enviar uma mensagem!</strong></p>
         </div>
-        <div>
+        <div class="contato-form">
             <form action="/enviar-email" method="post">
                 <input type="text" name="nome" placeholder="Seu nome" required>
                 <input type="email" name="email" placeholder="Seu e-mail" required>
                 <textarea name="msg" placeholder="Digite sua mensagem" required></textarea>
                 <button type="submit">Enviar</button>
+                <% if (typeof enviado !== 'undefined' && enviado) { %>
+                    <p style="margin-top: 5px; padding: 3px; color: green; border: dotted green;">Mensagem enviada com sucesso! :)</p>
+                <% } else if (typeof erro !== 'undefined' && erro) { %>
+                    <p style="margin-top: 5px; padding: 3px; color: red; border: dotted red;">Ocorreu um erro ao enviar sua mensagem. Tente novamente.</p>
+                <% } %>
             </form>
-            <% if (typeof enviado !== 'undefined' && enviado) { %>
-                <p style="color: green;">Mensagem enviada com sucesso! :)</p>
-            <% } else if (typeof erro !== 'undefined' && erro) { %>
-                <p style="color: red;">Ocorreu um erro ao enviar sua mensagem. Tente novamente.</p>
-            <% } %>
         </div>
-        <div>
+        <div class="contato-links">
             <a href="mailto:anajulia3907@gmail.com">
                 <i class="fa-solid fa-envelope"></i>
             </a>

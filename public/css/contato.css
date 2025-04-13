@@ -1,0 +1,90 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    scroll-behavior: smooth;
+    font-family: 'Poppins', sans-serif;
+}
+
+body {
+    background-color: #0d0d0d;
+    color: #ffffff;
+    padding-top: 80px;
+}
+
+#contato {
+    min-height: 87vh;
+    padding: 5rem 10%;
+    color: #ffffff;
+    display: flex;
+    flex-direction: column;
+    gap: 3rem;
+}
+
+#contato h2 {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: #ffffff;
+}
+
+#contato hr {
+    width: 60px;
+    height: 4px;
+    border: none;
+    background-image: linear-gradient(to left, #FF67B6, #9E56C6, #3E46D7);
+    margin-bottom: -2rem;
+}
+
+.contato-texto {
+    flex: 1;
+    font-size: 1rem;
+    line-height: 1.7;
+    color: #d9d9d9;
+}
+
+.contato-form form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+}
+
+form input, textarea {
+    border-radius: 8px;
+    width: 350px;
+    padding: 8px;
+}
+
+form button {
+    background-image: linear-gradient(to left, #FF67B6, #9E56C6, #3E46D7);
+    color: #ffffff;
+    padding: 8px;
+    border-radius: 8px;
+    border: none;
+}
+
+.contato-links {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    gap: 1.5rem;
+    margin-top: -1rem;
+    margin-bottom: -2rem;
+}
+
+.contato-links a {
+    font-size: 1.5rem;
+    color: #ffffff;
+    transition: transform 0.2s ease, color 0.2s ease;
+}
+
+.contato-links a:hover {
+    transform: scale(1.2);
+    color: #b18cff;
+}
+
+@media (max-width: 768px) {
+    form input, textarea {
+        max-width: 100%;
+    }
+}
