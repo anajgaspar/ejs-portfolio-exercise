@@ -24,12 +24,12 @@
       <p><strong>Abaixo estão os projetos que desenvolvi até o momento, clique neles para saber mais:</strong></p>
     </div>
     <div class="projetos-cards">
-      <% projetos.forEach(projeto => { %>
+      <!-- <% projetos.forEach(projeto => { %>
         <div class="card" onclick="abrirModal(<%= projeto.id %>)">
           <img src="/<%= projeto.imagem %>">
           <h4><%= projeto.titulo %></h4>
         </div>
-      <% }) %>
+      <% }) %> -->
     </div>
     <div id="modal" class="modal hidden">
       <div class="modal-content">
@@ -43,57 +43,57 @@
     </div>
   </section>
   <script>
-    const projetos = <%- JSON.stringify(projetos) %>;
+    // const projetos = <%- JSON.stringify(projetos) %>;
 
-    const modal = document.getElementById('modal');
+    // const modal = document.getElementById('modal');
 
-    function abrirModal(id) {
-      const projeto = projetos.find(p => p.id === Number(id));
+    // function abrirModal(id) {
+    //   const projeto = projetos.find(p => p.id === Number(id));
 
-      document.getElementById('modalTitulo').textContent = projeto.titulo;
-      document.getElementById('modalDescricao').textContent = projeto.descricao;
+    //   document.getElementById('modalTitulo').textContent = projeto.titulo;
+    //   document.getElementById('modalDescricao').textContent = projeto.descricao;
 
-      const tecnologiasDiv = document.getElementById('modalTecnologias');
-      tecnologiasDiv.innerHTML = '';
-      if (projeto.tecnologias) {
-        projeto.tecnologias.forEach(tec => {
-          const span = document.createElement('span');
-          span.textContent = tec;
-          tecnologiasDiv.appendChild(span);
-        });
-      }
+    //   const tecnologiasDiv = document.getElementById('modalTecnologias');
+    //   tecnologiasDiv.innerHTML = '';
+    //   if (projeto.tecnologias) {
+    //     projeto.tecnologias.forEach(tec => {
+    //       const span = document.createElement('span');
+    //       span.textContent = tec;
+    //       tecnologiasDiv.appendChild(span);
+    //     });
+    //   }
 
-      const linksDiv = document.getElementById('modalLinks');
-      linksDiv.innerHTML = '';
-      if (projeto.github) {
-        const githubLink = document.createElement('a');
-        githubLink.href = projeto.github;
-        githubLink.target = '_blank';
-        githubLink.className = 'bg-gray-800 text-white px-4 py-2 rounded-md hover:bg-gray-700';
-        githubLink.textContent = 'Ver no GitHub';
-        linksDiv.appendChild(githubLink);
-      }
-      if (projeto.visitar) {
-        const visitarLink = document.createElement('a');
-        visitarLink.href = projeto.visitar;
-        visitarLink.target = '_blank';
-        visitarLink.className = 'bg-purple-900 text-white px-4 py-2 rounded-md ml-2 hover:bg-purple-700';
-        visitarLink.innerHTML = '<i class="fas fa-external-link-alt"></i> Visitar';
-        linksDiv.appendChild(visitarLink);
-      }
+    //   const linksDiv = document.getElementById('modalLinks');
+    //   linksDiv.innerHTML = '';
+    //   if (projeto.github) {
+    //     const githubLink = document.createElement('a');
+    //     githubLink.href = projeto.github;
+    //     githubLink.target = '_blank';
+    //     githubLink.className = 'bg-gray-800 text-white px-4 py-2 rounded-md hover:bg-gray-700';
+    //     githubLink.textContent = 'Ver no GitHub';
+    //     linksDiv.appendChild(githubLink);
+    //   }
+    //   if (projeto.visitar) {
+    //     const visitarLink = document.createElement('a');
+    //     visitarLink.href = projeto.visitar;
+    //     visitarLink.target = '_blank';
+    //     visitarLink.className = 'bg-purple-900 text-white px-4 py-2 rounded-md ml-2 hover:bg-purple-700';
+    //     visitarLink.innerHTML = '<i class="fas fa-external-link-alt"></i> Visitar';
+    //     linksDiv.appendChild(visitarLink);
+    //   }
 
-      modal.classList.add('show');
-    }
+    //   modal.classList.add('show');
+    // }
 
-    function fecharModal() {
-      modal.classList.remove('show');
-    }
+    // function fecharModal() {
+    //   modal.classList.remove('show');
+    // }
 
-    window.addEventListener('click', function(event) {
-      if (event.target === modal) {
-        fecharModal();
-      }
-    });
+    // window.addEventListener('click', function(event) {
+    //   if (event.target === modal) {
+    //     fecharModal();
+    //   }
+    // });
   </script>
 </body>
 

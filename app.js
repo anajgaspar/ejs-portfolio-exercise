@@ -1,6 +1,7 @@
 require('dotenv').config()
 
 const express = require('express')
+const mysql = require('mysql2')
 const bodyParser = require('body-parser')
 const nodemailer = require('nodemailer')
 const app = express()
@@ -33,46 +34,92 @@ app.get('/habilidades', (req, res) => {
     })
 })
 
-app.get('/projetos', (req, res) => {
-    const projetos = [
-        {
-          id: 1,
-          titulo: "Desempenho de Vereadores",
-          imagem: "spoiler-projetos/spoiler-api1.png",
-          descricao:
-            "Desenvolvimento de uma página web responsiva com visualizações gráficas para representar a atuação geral da câmara.",
-          tecnologias: ["HTML5", "CSS3", "JavaScript", "Flask", "MySQL"],
-          github: "https://github.com/Draco-Imperium/API_FATEC1",
-        },
-        {
-          id: 2,
-          titulo: "Dashboard de Indicadores",
-          imagem: "spoiler-projetos/spoiler-api2.png",
-          descricao:
-            "Desenvolvimento de um dashboard de indicadores para monitorar e visualizar o impacto da plataforma, fornecendo dados estratégicos para patrocinadores e stakeholders.",
-          tecnologias: ["HTML5", "CSS3", "JavaScript", "React", "Sass", "TypeScript", "NodeJS"],
-          github: "https://github.com/GeneSys-fatec/API-2DSM",
-        },
-        {
-          id: 3,
-          titulo: "Portfólio Pessoal",
-          imagem: "spoiler-projetos/spoiler-portfolio.png",
-          descricao: "Desenvolvimento de um portfólio pessoal que reúne projetos e experiências.",
-          tecnologias: ["HTML5", "CSS3", "React", "TypeScript", "TailwindCSS"],
-          github: "https://github.com/anajgaspar/personal-portfolio",
-        },
-        {
-          id: 4,
-          titulo: "Portfólio Acadêmico",
-          imagem: "spoiler-projetos/spoiler-portfolio-express.png",
-          descricao: "Desenvolvimento de um portfólio acadêmico que reúne projetos e experiências.",
-          tecnologias: ["HTML5", "CSS3", "JavaScript", "NodeJS", "Express", "EJS"],
-          github: "https://github.com/anajgaspar/ejs-portfolio-exercise",
-        },
-    ];      
+// CRUD de Projetos
 
-    res.render('projetos', { projetos })
+const db = mysql.createConnection({
+    host: process.env.host,
+    user: process.env.user,
+    password: process.env.password,
+    database: process.env.database
 })
+
+db.connect(err => {
+    if (err) throw err;
+    console.log('Conectado ao MySQL!');
+})
+
+app.post('/projetos', (req, res) => {
+    const { nome, descricao, link, tecs } = req.body;
+    const novoProjeto = 'INSERT INTO Projetos (proj_nome, proj_desc, proj_tecs, proj_link) VALUES (?, ?, ?)';
+
+    db.query(novoProjeto, [nome, descricao, link], (err, result) => {
+        if (err) return res.status(500).send(err);
+        const projetoID = result.insertId;
+        const novoRelacionamento = 'INSERT INTO ProjetoTecnologias (projeto_id, tecnologia_id) VALUES ?';
+        const valores = tecs.map(tecID => [projetoID, tecID]);
+
+        db.query(novoRelacionamento, [valores], (err2) => {
+            if (err2) return res.status(500).send(err2);
+            res.send({ id: projetoID, nome, descricao, link, tecs });
+        })
+    });
+});
+
+app.get('/projetos', (req, res) => {
+    db.query('SELECT p.proj_nome, p.proj_desc, p.proj_link, GROUP_CONCAT(t.tec_nome) AS proj_tecs FROM Projetos p LEFT JOIN ProjetoTecnologias pt ON p.proj_id = pt.proj_id LEFT JOIN Tecnologias t ON pt.tec_id = t.tec_id GROUP BY p.proj_id', (err, results) => {
+        if (err) return res.status(500).send(err);
+        res.send(results);
+    })
+})
+
+app.get('/projetos/:id', (req, res) => {
+    const sql = 'SELECT p.proj_nome, p.proj_desc, p.proj_link, GROUP_CONCAT(t.tec_nome) AS proj_tecs FROM Projetos p LEFT JOIN ProjetoTecnologias pt ON p.proj_id = pt.proj_id LEFT JOIN Tecnologias t ON pt.tec_id = t.tec_id WHERE p.proj_id = ? GROUP BY p.proj_id'
+
+    db.query(sql, [req.params.id], (err, result) => {
+        if (err) return res.status(500).send(err);
+        if (result.length === 0) return res.status(404).send({ mensagem: 'Projeto não encontrado!' });
+        res.send(result[0]);
+    })
+});
+
+app.put('/projetos/:id', (req, res) => {
+    const { nome, descricao, link, tecs } = req.body;
+    const projetoID = req.params.id;
+    const sql = 'UPDATE Projetos SET proj_nome = ?, proj_desc = ?, proj_link = ? WHERE proj_id = ?';
+
+    db.query(sql, [nome, descricao, link, projetoID], (err) => {
+        if (err) return res.status(500).send(err);
+        const removerRelacionamento = 'DELETE FROM ProjetoTecnologias WHERE projeto_id = ?'
+
+        db.query(removerRelacionamento, [projetoID], (err2) => {
+            if (err2) return res.status(500).send(err2);
+            const novoRelacionamento = 'INSERT INTO ProjetoTecnologias (projeto_id, tecnologia_id) VALUES ?';
+            const valores = tecs.map(tecID => [projetoID, tecID]);
+
+            db.query(novoRelacionamento, [valores], (err3) => {
+                if (err3) return res.status(500).send(err3);
+                res.send({ mensagem: 'Projeto atualizado com sucesso!' });
+            })
+        })
+    });
+})
+
+app.delete('/projetos/:id', (req, res) => {
+    const projetoID = req.params.id;
+    const removerRelacionamento = 'DELETE FROM ProjetoTecnologias WHERE projeto_id = ?'
+
+    db.query(removerRelacionamento, [projetoID], (err) => {
+        if (err) return res.status(500).send(err);
+        const removerProjeto = 'DELETE FROM Projetos WHERE proj_id = ?'
+
+        db.query(removerProjeto, [projetoID], (err2) => {
+            if (err2) return res.status(500).send(err2);
+            res.send({ mensagem: 'Projeto excluído com sucesso!' });
+        })
+    })
+})
+
+// CRUD de E-mail
 
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())
@@ -128,4 +175,4 @@ app.post('/enviar-email', (req, res) => {
     })
 })
 
-app.listen(3000, () => { console.log('app rodando') })
+app.listen(3000, () => { console.log('App rodando!') })
