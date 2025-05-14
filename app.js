@@ -36,6 +36,8 @@ app.get('/habilidades', (req, res) => {
 
 // CRUD de Projetos
 
+app.use(express.json());
+
 const db = mysql.createConnection({
     host: process.env.host,
     user: process.env.user,
@@ -50,12 +52,15 @@ db.connect(err => {
 
 app.post('/projetos', (req, res) => {
     const { nome, descricao, link, tecs } = req.body;
-    const novoProjeto = 'INSERT INTO Projetos (proj_nome, proj_desc, proj_tecs, proj_link) VALUES (?, ?, ?)';
+    const novoProjeto = 'INSERT INTO Projetos (proj_nome, proj_desc, proj_link) VALUES (?, ?, ?)';
 
     db.query(novoProjeto, [nome, descricao, link], (err, result) => {
         if (err) return res.status(500).send(err);
         const projetoID = result.insertId;
-        const novoRelacionamento = 'INSERT INTO ProjetoTecnologias (projeto_id, tecnologia_id) VALUES ?';
+        if (!tecs || tecs.length === 0) {
+            return res.send({ id: projetoID, nome, descricao, link, tecs: [] });
+        }
+        const novoRelacionamento = 'INSERT INTO ProjetoTecnologias (proj_id, tec_id) VALUES ?';
         const valores = tecs.map(tecID => [projetoID, tecID]);
 
         db.query(novoRelacionamento, [valores], (err2) => {
@@ -89,11 +94,11 @@ app.put('/projetos/:id', (req, res) => {
 
     db.query(sql, [nome, descricao, link, projetoID], (err) => {
         if (err) return res.status(500).send(err);
-        const removerRelacionamento = 'DELETE FROM ProjetoTecnologias WHERE projeto_id = ?'
+        const removerRelacionamento = 'DELETE FROM ProjetoTecnologias WHERE proj_id = ?'
 
         db.query(removerRelacionamento, [projetoID], (err2) => {
             if (err2) return res.status(500).send(err2);
-            const novoRelacionamento = 'INSERT INTO ProjetoTecnologias (projeto_id, tecnologia_id) VALUES ?';
+            const novoRelacionamento = 'INSERT INTO ProjetoTecnologias (proj_id, tec_id) VALUES ?';
             const valores = tecs.map(tecID => [projetoID, tecID]);
 
             db.query(novoRelacionamento, [valores], (err3) => {
@@ -106,7 +111,7 @@ app.put('/projetos/:id', (req, res) => {
 
 app.delete('/projetos/:id', (req, res) => {
     const projetoID = req.params.id;
-    const removerRelacionamento = 'DELETE FROM ProjetoTecnologias WHERE projeto_id = ?'
+    const removerRelacionamento = 'DELETE FROM ProjetoTecnologias WHERE proj_id = ?'
 
     db.query(removerRelacionamento, [projetoID], (err) => {
         if (err) return res.status(500).send(err);
